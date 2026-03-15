@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Login SerahTerimaYuk</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:url("backgroundlogin.jpg") center/cover no-repeat fixed;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.loginBox{
+
+background:rgba(255,255,255,0.85);
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+width:280px;
+text-align:center;
+
+}
+
+.loginBox h2{
+margin-bottom:20px;
+}
+
+.loginBox input{
+
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
+
+}
+
+.loginBox button{
+
+width:100%;
+padding:10px;
+border:none;
+background:#3b82f6;
+color:white;
+border-radius:8px;
+font-size:15px;
+cursor:pointer;
+
+}
+
+.loginBox button:hover{
+background:#2563eb;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="loginBox">
+
+<h2>Login</h2>
+
+<input id="user" placeholder="Username">
+
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="login()">Masuk</button>
+
+</div>
+
+<script>
+
+async function login(){
+
+let user=document.getElementById("user").value
+let pass=document.getElementById("pass").value
+
+let res=await fetch("login.php",{
+
+method:"POST",
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({
+
+user:user,
+pass:pass
+
+})
+
+})
+
+let data=await res.json()
+
+if(data.status==="ok"){
+
+localStorage.setItem("st_user",user)
+
+location.href="index.html"
+
+}else{
+
+alert("Username atau password salah")
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
+
