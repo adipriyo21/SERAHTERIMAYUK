@@ -1,956 +1,182 @@
-
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3b82f6">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>SERAHTERIMAYUK</title>
 
 <style>
-
-body{
-font-family:Arial;
-margin:0;
-
-background:
-url("bgbodi2.png");
-
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-}
-/* LOGIN */
-
-#loginPage{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-
-background:
-url("bglogin2.png");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-}
-.loginBox{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-
-padding:35px;
-border-radius:16px;
-width:270px;
-text-align:center;
-
-border:1px solid rgba(255,255,255,0.3);
-
-box-shadow:
-0 15px 35px rgba(0,0,0,0.35),
-0 0 8px rgba(255,255,255,0.2) inset;
-}
-.loginBox input,
-.loginBox button{
-
-width:100%;
-box-sizing:border-box;
-
-padding:10px;
-
-margin-top:12px;
-
-border-radius:8px;
-
-font-size:14px;
-}
-.loginBox button{
-
-border:none;
-
-background:#3b82f6;
-
-color:white;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:0.2s;
-
-}
-
-.loginBox button:hover{
-
-background:#2563eb;
-
-}
-.loginBox h2{
-margin-top:0;
-margin-bottom:10px;
-color:#2563eb;
-}
-/* MOBILE */
-
-@media (max-width:600px){
-
-.header{
-flex-direction:column;
-align-items:flex-start;
-}
-
-.headerRight{
-width:100%;
-display:flex;
-justify-content:space-between;
-}
-
-.searchWrap input{
-width:120px;
-}
-
-}
-
-/* HEADER */
-
-.header{
-background:white;
-padding:12px 16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:8px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-.headerRight{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-/* SEARCH HEADER */
-
-.searchWrap{
-position:relative;
-}
-
-.searchWrap input{
-width:150px;
-padding:6px 8px 6px 24px;
-border-radius:6px;
-border:1px solid #ccc;
-font-size:12px;
-}
-
-.searchIcon{
-position:absolute;
-left:6px;
-top:4px;
-font-size:12px;
-color:#888;
-}
-
-/* CONTAINER */
-
-.container{
-max-width:700px;
-margin:auto;
-padding:20px;
-}
-
-/* ALERT */
-
-#newPostAlert{
-display:none;
-background:#3b82f6;
-color:white;
-text-align:center;
-padding:8px;
-border-radius:8px;
-margin-bottom:10px;
-cursor:pointer;
-}
-
-/* POST BOX */
-
-.postBox{
-background:rgba(255,255,255,0.95);
-
-padding:18px;
-
-border-radius:14px;
-
-margin-bottom:18px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,0.25);
-
-backdrop-filter:blur(3px);
-}
-
-.postTitle{
-font-weight:bold;
-color:#3b82f6;
-margin-bottom:6px;
-}
-.post{
-background:rgba(255,255,255,0.96);
-
-padding:16px;
-
-margin-bottom:16px;
-
-border-radius:14px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,0.25);
-
-backdrop-filter:blur(3px);
-}
-textarea{
-width:100%;
-border:none;
-outline:none;
-resize:none;
-font-size:14px;
-}
-.container{
-max-width:700px;
-margin:auto;
-padding:20px;
-
-background:rgba(255,255,255,0.15);
-border-radius:20px;
-
-backdrop-filter:blur(5px);
-}
-/* TOOLBAR */
-
-.toolbar{
-display:flex;
-justify-content:space-between;
-margin-top:10px;
-}
-
-button{
-border:none;
-padding:7px 12px;
-border-radius:6px;
-cursor:pointer;
-}
-
-.btnBlue{background:#3b82f6;color:white}
-.btnGreen{background:#22c55e;color:white}
-.btnRed{background:#ef4444;color:white}
-
-/* CARD */
-
-.card{
-background:white;
-padding:16px;
-border-radius:12px;
-box-shadow:0 4px 10px rgba(0,0,0,0.08);
-margin-bottom:14px;
-}
-
-.postHeader{
-display:flex;
-justify-content:space-between;
-}
-
-.postUser{
-font-weight:bold;
-}
-
-.postRight{
-text-align:right;
-}
-
-.postTime{
-font-size:11px;
-color:#777;
-}
-
-.postActions span{
-cursor:pointer;
-margin-left:6px;
-}
-
-/* COMMENT */
-
-.comment{
-border-top:1px solid #eee;
-margin-top:6px;
-padding-top:6px;
-font-size:13px;
-}
-
-.commentTime{
-font-size:11px;
-color:#777;
-margin-left:6px;
-}
-
-.commentInput{
-display:flex;
-gap:6px;
-margin-top:6px;
-}
-
-.commentInput input{
-flex:1;
-padding:6px;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-/* DATE GROUP */
-
-.dateTitle{
-font-size:12px;
-font-weight:400;
-color:#8a8a8a;
-margin:14px 0 6px 0;
-cursor:pointer;
-}
-
-/* MEDIA */
-
-.postimg{
-width:100%;
-max-height:380px;
-object-fit:cover;
-border-radius:8px;
-margin-top:10px;
-cursor:pointer;
-}
-
-/* MODAL */
-
-#imgModal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
-z-index:999;
-}
-
-#imgModal img,
-#imgModal video{
-max-width:90%;
-max-height:90%;
-border-radius:10px;
-}
-
-/* SEARCH HIGHLIGHT */
-
-mark{
-background:#ffe58a;
-padding:1px 3px;
-border-radius:3px;
-}
-.avatar{
-
-width:32px;
-height:32px;
-
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-color:white;
-font-weight:bold;
-font-size:14px;
-
-margin-right:8px;
-
-flex-shrink:0;
-
-}
-
-.postUserWrap{
-display:flex;
-align-items:center;
-}
+body{font-family:Arial;margin:0;background:#eef3fb}
+header{background:#3b82f6;color:white;padding:12px;text-align:center}
+#loginPage{display:flex;justify-content:center;align-items:center;height:100vh}
+.loginBox{background:white;padding:25px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.1)}
+input,button{padding:10px;margin-top:10px;width:100%}
+#app{display:none;padding:10px}
+.postBox{background:white;padding:10px;margin-top:10px;border-radius:6px}
+#newPostAlert{display:none;background:#2563eb;color:white;padding:8px;text-align:center;cursor:pointer}
 </style>
 
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<header>SERAHTERIMAYUK</header>
+
+<div id="newPostAlert" onclick="loadPosts()">🔔 Posting baru tersedia — klik untuk melihat</div>
 
 <div id="loginPage">
 <div class="loginBox">
-<h2>SERAHTERIMAYUK</h2>
-<input id="nameInput" placeholder="Nama Kamu">
-<input id="passInput" type="password" placeholder="Password">
-
-<button class="btnBlue" style="width:100%;margin-top:10px" onclick="login()">Masuk</button></div>
+<h3>Login</h3>
+<input id="username" placeholder="Masukkan username">
+<button onclick="login()">Masuk</button>
+</div>
 </div>
 
-<!-- APP -->
+<div id="app">
 
-<div id="app" style="display:none">
+<textarea id="postText" placeholder="Tulis laporan..." style="width:100%;height:80px"></textarea>
 
-<div class="header">
+<button onclick="sendPost()">Kirim</button>
 
-<b>SERAHTERIMAYUK</b>
-
-<div class="headerRight">
-
-<div class="searchWrap">
-<span class="searchIcon">🔎</span>
-<input id="searchInput" placeholder="Cari..." onkeyup="renderPosts()">
-</div>
-
-<span id="username"></span>
-
-<button class="btnRed" onclick="logout()">Logout</button>
+<div id="posts"></div>
 
 </div>
 
-</div>
-
-<div class="container">
-
-<div id="newPostAlert" onclick="loadPosts()">
-🔔 Posting baru tersedia — klik untuk melihat
-</div>
-
-<div class="postBox">
-
-<div class="postTitle">
-Apa yang ingin kamu sampaikan?
-</div>
-
-<textarea id="postText" rows="3"></textarea>
-
-<input type="file" id="fileInput" accept="image/*,video/*" style="display:none">
-
-<div id="preview"></div>
-
-<div class="toolbar">
-
-<button class="btnBlue" onclick="fileInput.click()">
-📎 Lampirkan Photo
-</button>
-
-<button class="btnGreen" onclick="createPost()">
-Posting
-</button>
-
-</div>
-
-</div>
-
-<div id="feed"></div>
-
-</div>
-
-</div>
-
-<div id="imgModal" onclick="this.style.display='none'"></div>
 <audio id="notifSound" src="notif.wav" preload="auto"></audio>
 
-<script>
-function showNotification(){
+<script type="module">
 
-if(Notification.permission==="granted"){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let n = new Notification("SERAHTERIMAYUK",{
-body:"HI BOS, ADA LAPORAN BARU.CEK DULU LAH!",
-icon:"icon-192.png"
-})
+/* FIREBASE CONFIG */
 
-n.onclick=function(){
-window.focus()
-}
+const firebaseConfig = {
+apiKey: "AIzaSyDhFBEBFv6uxX15Z8VHsxiqNU_qI5Zjue0",
+authDomain: "serahterimayuk.firebaseapp.com",
+projectId: "serahterimayuk",
+storageBucket: "serahterimayuk.firebasestorage.app",
+messagingSenderId: "121409645308",
+appId: "1:121409645308:web:76c709eb49ef0a1d5e4579",
+measurementId: "G-HJQTCQ4721"
+};
 
-}
-
-}
-/* NOTIFICATION PERMISSION */
-
-if("Notification" in window){
-
-if(Notification.permission!=="granted"){
-Notification.requestPermission()
-}
-
-}
-/* AUTO PAUSE VIDEO */
-
-document.addEventListener("play",function(e){
-
-if(e.target.tagName==="VIDEO"){
-
-let videos=document.querySelectorAll("video")
-
-videos.forEach(v=>{
-if(v!==e.target){
-v.pause()
-}
-})
-
-}
-
-},true)
-
-
-/* AVATAR */
-
-function createAvatar(name){
-
-let letter=name.charAt(0).toUpperCase()
-
-let colors=[
-"#ef4444",
-"#f59e0b",
-"#10b981",
-"#3b82f6",
-"#6366f1",
-"#ec4899"
-]
-
-let index=name.charCodeAt(0)%colors.length
-let color=colors[index]
-
-return `
-<div class="avatar" style="background:${color}">
-${letter}
-</div>
-`
-
-}
-
-
-/* USER */
-
-let user=localStorage.getItem("st_user")
-let role=localStorage.getItem("st_role")
-
-let allPosts=[]
-let lastPostCount=0
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 /* LOGIN */
 
-async function login(){
+let user = localStorage.getItem("user");
 
-let name=nameInput.value.trim()
-let pass=passInput.value.trim()
+if(user){
 
-if(!name || !pass){
-alert("Isi username dan password")
-return
-}
+document.getElementById("loginPage").style.display="none";
+document.getElementById("app").style.display="block";
 
-let res=await fetch("user.json")
-let users=await res.json()
-
-let valid=users.find(u=>u.username===name && u.password===pass)
-
-if(!valid){
-alert("Username atau password salah")
-return
-}
-
-localStorage.setItem("st_user",valid.username)
-localStorage.setItem("st_role",valid.role)
-
-location.reload()
+startRealtime();
 
 }
 
+window.login=function(){
 
-/* LOGOUT */
+let u=document.getElementById("username").value;
 
-function logout(){
+if(!u)return alert("Isi username");
 
-localStorage.removeItem("st_user")
-localStorage.removeItem("st_role")
+localStorage.setItem("user",u);
 
-location.reload()
-
-}
-
-
-/* PREVIEW FILE */
-
-fileInput.onchange=function(){
-
-let file=this.files[0]
-if(!file)return
-
-let url=URL.createObjectURL(file)
-
-if(file.type.startsWith("image")){
-preview.innerHTML=`<img src="${url}" class="postimg">`
-}else{
-preview.innerHTML=`<video src="${url}" controls class="postimg"></video>`
-}
+location.reload();
 
 }
 
+/* POSTING */
 
-/* TIME */
+window.sendPost=async function(){
 
-function formatTime(){
-let d=new Date()
-return d.toLocaleString("id-ID")
-}
+let text=document.getElementById("postText").value;
 
+if(!text)return;
 
-/* HIGHLIGHT */
+await addDoc(collection(db,"posts"),{
+user:user,
+text:text,
+time:Date.now()
+})
 
-function highlight(text,keyword){
-
-if(!keyword) return text
-
-let regex=new RegExp(`(${keyword})`,"gi")
-
-return text.replace(regex,"<mark>$1</mark>")
+document.getElementById("postText").value="";
 
 }
 
+/* REALTIME */
 
-/* LOAD POSTS */
+let lastCount=0;
 
-async function loadPosts(){
+function startRealtime(){
 
-let res=await fetch("load.php")
-allPosts=await res.json()
+const q=query(collection(db,"posts"),orderBy("time"));
 
-lastPostCount=allPosts.length
+onSnapshot(q,(snapshot)=>{
 
-document.getElementById("newPostAlert").style.display="none"
+let posts=[];
+snapshot.forEach(doc=>{
+posts.push(doc.data())
+})
 
-renderPosts()
+if(posts.length>lastCount){
 
-}
-
-
-/* CHECK POST BARU */
-
-async function checkNewPosts(){
-
-let res = await fetch("load.php")
-let posts = await res.json()
-
-/* jika ada posting baru */
-
-if(posts.length > lastPostCount){
-
-let newPosts = posts.slice(lastPostCount)
+let newPosts=posts.slice(lastCount);
 
 newPosts.forEach(p=>{
 
-/* jangan tampilkan notif jika itu posting kita sendiri */
+if(p.user!==user){
 
-if(p.user !== user){
-
-/* suara */
-document.getElementById("notifSound").play()
-
-/* popup */
-showNotification(p.user,p.text)
+document.getElementById("notifSound").play().catch(()=>{})
 
 }
 
 })
 
-document.getElementById("newPostAlert").style.display="block"
-
-lastPostCount = posts.length
+document.getElementById("newPostAlert").style.display="block";
 
 }
 
-}
+lastCount=posts.length;
 
-/* RENDER POSTS */
-
-function renderPosts(){
-
-let feed=document.getElementById("feed")
-feed.innerHTML=""
-
-let keyword=searchInput.value.toLowerCase()
-
-let posts=allPosts.filter(p=>
-p.text.toLowerCase().includes(keyword) ||
-p.user.toLowerCase().includes(keyword)
-)
-
-let groups={}
-
-posts.forEach((p,i)=>{
-
-let day=p.time.split(" ")[0]
-
-if(!groups[day])groups[day]=[]
-
-groups[day].push({p,i})
+renderPosts(posts);
 
 })
 
-let today=new Date().toISOString().slice(0,10)
-
-for(let day in groups){
-
-let title=document.createElement("div")
-title.className="dateTitle"
-
-let isToday=day===today
-
-title.innerText=isToday?"Hari ini ("+day+")":day+" [+]"
-
-let content=document.createElement("div")
-
-if(!isToday)content.style.display="none"
-
-title.onclick=()=>{
-
-if(content.style.display==="none"){
-content.style.display="block"
-title.innerText=day+" [-]"
-}else{
-content.style.display="none"
-title.innerText=day+" [+]"
 }
 
-}
+/* RENDER */
 
-feed.appendChild(title)
+function renderPosts(posts){
 
-groups[day].forEach(o=>{
+let html="";
 
-let p=o.p
-let i=o.i
+posts.reverse().forEach(p=>{
 
-let media=""
-
-if(p.file){
-
-if(p.file.match(/jpg|jpeg|png|gif/i)){
-media=`<img src="${p.file}" class="postimg">`
-}else{
-media=`<video src="${p.file}" class="postimg" controls preload="metadata"></video>`
-}
-
-}
-
-let comments=""
-
-if(p.comments){
-
-p.comments.forEach(c=>{
-
-comments+=`
-<div class="comment">
-<b>${c.user}</b> : ${highlight(c.text,keyword)}
-<span class="commentTime">${c.time}</span>
+html+=`
+<div class="postBox">
+<b>${p.user}</b><br>
+${p.text}
 </div>
-`
+`;
 
 })
 
-}
-
-let div=document.createElement("div")
-div.className="card"
-
-div.innerHTML=`
-
-<div class="postHeader">
-
-<div class="postUserWrap">
-
-${createAvatar(p.user)}
-
-<div class="postUser">${p.user}</div>
-
-</div>
-
-<div class="postRight">
-
-<div class="postTime">${p.time}</div>
-
-<div class="postActions">
-
-${user===p.user ?
-`<span onclick="editPost(${i},'${p.text.replace(/'/g,"")}')">✏️</span>` : ""}
-
-${role==="admin" || user===p.user ?
-`<span onclick="deletePost(${i})">🗑️</span>` : ""}
-
-</div>
-
-</div>
-
-</div>
-
-<div style="margin-top:10px">${highlight(p.text,keyword)}</div>
-
-${media}
-
-${comments}
-
-<div class="commentInput">
-<input id="c${i}" placeholder="Komentar...">
-<button onclick="comment(${i})">Kirim</button>
-</div>
-
-`
-
-content.appendChild(div)
-
-})
-
-feed.appendChild(content)
+document.getElementById("posts").innerHTML=html;
 
 }
 
-}
+window.loadPosts=function(){
 
-
-/* CREATE POST */
-
-async function createPost(){
-
-let text=postText.value.trim()
-let file=fileInput.files[0]
-
-if(text==="" && !file)return
-
-let form=new FormData()
-
-form.append("user",user)
-form.append("text",text)
-form.append("time",formatTime())
-
-if(file)form.append("file",file)
-
-await fetch("save.php",{method:"POST",body:form})
-
-postText.value=""
-fileInput.value=""
-preview.innerHTML=""
-
-loadPosts()
+document.getElementById("newPostAlert").style.display="none";
 
 }
 
-
-/* COMMENT */
-
-async function comment(i){
-
-let text=document.getElementById("c"+i).value
-if(!text)return
-
-await fetch("comment.php",{
-
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-index:i,
-user:user,
-text:text,
-time:formatTime()
-})
-
-})
-
-loadPosts()
-
-}
-
-
-/* DELETE */
-
-async function deletePost(i){
-
-if(!confirm("Hapus posting?"))return
-
-await fetch("delete.php",{
-
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({index:i})
-
-})
-
-loadPosts()
-
-}
-
-
-/* EDIT */
-
-async function editPost(i,text){
-
-let newText=prompt("Edit posting",text)
-if(!newText)return
-
-await fetch("edit.php",{
-
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-index:i,
-text:newText
-})
-
-})
-
-loadPosts()
-
-}
-
-
-/* INIT */
-
-function init(){
-
-user=localStorage.getItem("st_user")
-role=localStorage.getItem("st_role")
-
-if(!user){
-
-loginPage.style.display="flex"
-app.style.display="none"
-
-}else{
-
-loginPage.style.display="none"
-app.style.display="block"
-
-username.innerText=user
-
-loadPosts()
-
-}
-
-}
-
-init()
-
-setInterval(checkNewPosts,10000)
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("sw.js")
-}
 </script>
+
 </body>
-</html> 
+</html>
