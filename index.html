@@ -907,5 +907,61 @@ if("serviceWorker" in navigator){
 navigator.serviceWorker.register("sw.js")
 }
 </script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDhFBEBFv6uxX15Z8VHsxiqNU_qI5Zjue0",
+  authDomain: "serahterimayuk.firebaseapp.com",
+  projectId: "serahterimayuk",
+  storageBucket: "serahterimayuk.firebasestorage.app",
+  messagingSenderId: "121409645308",
+  appId: "1:121409645308:web:76c709eb49ef0a1d5e4579",
+  measurementId: "G-HJQTCQ4721"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+</script>
+  <script>
+
+function kirimPosting(){
+
+let nama = document.getElementById("nama").value;
+let pesan = document.getElementById("pesan").value;
+
+db.ref("postingan").push({
+nama: nama,
+pesan: pesan,
+waktu: Date.now()
+});
+
+alert("Posting berhasil");
+
+}
+
+</script>
+  <script>
+
+db.ref("postingan").on("value", function(snapshot){
+
+let data = snapshot.val();
+let html = "";
+
+for(let id in data){
+
+html += "<div>";
+html += "<b>"+data[id].nama+"</b><br>";
+html += data[id].pesan;
+html += "</div><hr>";
+
+}
+
+document.getElementById("postingan").innerHTML = html;
+
+});
+
+</script>
 </body>
 </html> 
