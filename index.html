@@ -593,6 +593,10 @@ renderPosts()
 }
 
 /* CREATE POST */
+if(text===""){
+alert("Isi posting dulu")
+return
+}
 
 window.createPost=async function(){
 
@@ -662,7 +666,87 @@ text:newText
 })
 
 }
+function renderPosts(){
 
+let feed=document.getElementById("feed")
+let search=document.getElementById("searchInput").value.toLowerCase()
+
+feed.innerHTML=""
+
+let posts=[...allPosts].reverse()
+
+posts.forEach((p,i)=>{
+
+if(search && !p.text.toLowerCase().includes(search)) return
+
+let d=new Date(p.time)
+
+let time=d.toLocaleString("id-ID")
+
+let card=`
+
+<div class="post">
+
+<div class="postHeader">
+
+<div class="postUserWrap">
+
+<div class="avatar" style="background:#3b82f6">
+${p.user.charAt(0).toUpperCase()}
+</div>
+
+<div class="postUser">${p.user}</div>
+
+</div>
+
+<div class="postRight">
+
+<div class="postTime">${time}</div>
+
+<div class="postActions">
+
+${p.user===user||role==="admin"
+?`<span onclick="editPost(${i},\`${p.text}\`)">✏️</span>
+<span onclick="deletePost(${i})">🗑</span>`
+:""}
+
+</div>
+
+</div>
+
+</div>
+
+<div>${p.text}</div>
+
+${p.comments?.map(c=>`
+
+<div class="comment">
+
+<b>${c.user}</b>: ${c.text}
+
+<span class="commentTime">${c.time}</span>
+
+</div>
+
+`).join("")||""}
+
+<div class="commentInput">
+
+<input id="c${i}" placeholder="Tulis komentar">
+
+<button onclick="comment(${i})">Kirim</button>
+
+</div>
+
+</div>
+
+`
+
+feed.innerHTML+=card
+
+})
+
+}
 /* INIT */
 
 function init(){
