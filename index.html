@@ -493,7 +493,16 @@ measurementId: "G-HJQTCQ4721"
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+/* DOM ELEMENT */
 
+const nameInput = document.getElementById("nameInput")
+const passInput = document.getElementById("passInput")
+const loginPage = document.getElementById("loginPage")
+const appPage = document.getElementById("app")
+const username = document.getElementById("username")
+const postText = document.getElementById("postText")
+const searchInput = document.getElementById("searchInput")
+const feed = document.getElementById("feed")
 /* USER */
 
 let user=localStorage.getItem("st_user")
@@ -757,12 +766,12 @@ role=localStorage.getItem("st_role")
 if(!user){
 
 loginPage.style.display="flex"
-app.style.display="none"
+appPage.style.display="none"
 
 }else{
 
 loginPage.style.display="none"
-app.style.display="block"
+appPage.style.display="block"
 
 username.innerText=user
 
