@@ -1,477 +1,343 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>SERAHTERIMAYUK</title>
 
 <style>
-
 body{
-margin:0;
 font-family:Arial;
-background:url("backgroundbody.jpg") center/cover no-repeat fixed;
+margin:0;
+background:#eef3fb;
+}
+
+/* HEADER */
+header{
+background:#3b82f6;
+color:white;
+padding:14px;
+text-align:center;
+font-weight:bold;
 }
 
 /* LOGIN */
-
 #loginPage{
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-background:url("backgroundlogin.jpg") center/cover no-repeat fixed;
 }
 
 .loginBox{
-
-background:rgba(255,255,255,0.85);
-padding:30px;
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
 width:260px;
 text-align:center;
-
 }
 
 .loginBox input{
-
 width:100%;
 padding:10px;
 margin-top:10px;
-border-radius:8px;
+border-radius:6px;
 border:1px solid #ccc;
-box-sizing:border-box;
-
 }
 
 .loginBox button{
-
 width:100%;
+margin-top:12px;
 padding:10px;
-margin-top:10px;
-border:none;
 background:#3b82f6;
 color:white;
-border-radius:8px;
+border:none;
+border-radius:6px;
 cursor:pointer;
-
 }
 
 /* APP */
-
 #app{
 display:none;
+padding:12px;
+max-width:700px;
+margin:auto;
 }
 
-.header{
-
-background:white;
-padding:10px;
+/* TOP BAR */
+.topBar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
-}
-
-.feed{
-max-width:600px;
-margin:auto;
-padding:10px;
-}
-
-.postbox{
-
-background:white;
-padding:10px;
-border-radius:10px;
 margin-bottom:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.15);
-
 }
 
-.postbox textarea{
+.logoutBtn{
+background:#ef4444;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
+}
 
+/* POST BOX */
+.postBox{
+background:white;
+padding:12px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+margin-bottom:12px;
+}
+
+textarea{
 width:100%;
-height:60px;
-resize:none;
+height:80px;
 border-radius:8px;
 border:1px solid #ccc;
 padding:8px;
-box-sizing:border-box;
-
+resize:none;
 }
 
-.postbox button{
-
-margin-top:8px;
-padding:8px 14px;
-background:#3b82f6;
-border:none;
+.sendBtn{
+margin-top:10px;
+background:#22c55e;
 color:white;
+border:none;
+padding:8px 12px;
 border-radius:6px;
 cursor:pointer;
-
 }
 
+/* POSTS */
 .card{
-
 background:white;
-padding:10px;
+padding:14px;
+margin-top:12px;
 border-radius:10px;
-margin-bottom:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.15);
-
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
 
-.postHeader{
+.cardHeader{
 display:flex;
 justify-content:space-between;
 }
 
-.postUser{
+.username{
+color:#3b82f6;
 font-weight:bold;
 }
 
-.postTime{
-font-size:12px;
-color:#666;
+.time{
+font-size:11px;
+color:#777;
 }
 
-.postimg{
-width:100%;
-margin-top:8px;
-border-radius:8px;
-}
-
-.comment{
-font-size:13px;
-margin-top:5px;
-}
-
-.commentInput{
-display:flex;
-margin-top:6px;
-}
-
-.commentInput input{
-
-flex:1;
-padding:5px;
-border-radius:6px;
-border:1px solid #ccc;
-
-}
-
-.commentInput button{
-
-margin-left:4px;
-border:none;
-background:#3b82f6;
+#newPostAlert{
+display:none;
+background:#2563eb;
 color:white;
+padding:8px;
+text-align:center;
+cursor:pointer;
 border-radius:6px;
-padding:5px 10px;
-
+margin-bottom:10px;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<header>SERAHTERIMAYUK</header>
 
 <div id="loginPage">
-
 <div class="loginBox">
-
 <h3>Login</h3>
-
-<input id="loginUser" placeholder="Username">
-
-<input id="loginPass" type="password" placeholder="Password">
-
+<input id="usernameInput" placeholder="Masukkan username">
 <button onclick="login()">Masuk</button>
-
 </div>
-
 </div>
-
-<!-- APP -->
 
 <div id="app">
 
-<div class="header">
+<div id="newPostAlert" onclick="hideAlert()">
+🔔 Posting baru tersedia — klik untuk refresh
+</div>
 
-<div id="username"></div>
+<div class="topBar">
+<span id="whoLogin"></span>
+<button class="logoutBtn" onclick="logout()">Ganti User</button>
+</div>
 
-<button onclick="logout()">Keluar</button>
+<div class="postBox">
+<textarea id="postText" placeholder="Tulis laporan..."></textarea>
+<button class="sendBtn" onclick="sendPost()">Kirim</button>
+</div>
+
+<div id="posts"></div>
 
 </div>
 
-<div class="feed">
+<audio id="notifSound" src="notif.wav" preload="auto"></audio>
 
-<div class="postbox">
+<script type="module">
 
-<textarea id="postText" placeholder="Tulis sesuatu..."></textarea>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<input type="file" id="fileInput">
+/* FIREBASE */
 
-<div id="preview"></div>
+const firebaseConfig = {
+apiKey: "AIzaSyDhFBEBFv6uxX15Z8VHsxiqNU_qI5Zjue0",
+authDomain: "serahterimayuk.firebaseapp.com",
+projectId: "serahterimayuk",
+storageBucket: "serahterimayuk.firebasestorage.app",
+messagingSenderId: "121409645308",
+appId: "1:121409645308:web:76c709eb49ef0a1d5e4579"
+};
 
-<button onclick="createPost()">Posting</button>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-</div>
+/* USER */
 
-<div id="feed"></div>
+let user = localStorage.getItem("user");
 
-</div>
+/* INIT */
 
-</div>
-
-<script>
-
-let user=localStorage.getItem("st_user")
+if(user){
+showApp();
+startRealtime();
+}
 
 /* LOGIN */
 
-async function login(){
+window.login = function(){
 
-let user=document.getElementById("loginUser").value
-let pass=document.getElementById("loginPass").value
+let u = document.getElementById("usernameInput").value.trim();
 
-let res=await fetch("login.php",{
-
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-user:user,
-pass:pass
-})
-
-})
-
-let data=await res.json()
-
-if(data.status==="ok"){
-
-localStorage.setItem("st_user",user)
-
-location.reload()
-
-}else{
-
-alert("Username atau password salah")
-
+if(!u){
+alert("Isi username dulu");
+return;
 }
+
+localStorage.setItem("user", u);
+location.reload();
 
 }
 
 /* LOGOUT */
 
-function logout(){
-
-localStorage.removeItem("st_user")
-
-location.reload()
-
+window.logout = function(){
+localStorage.removeItem("user");
+location.reload();
 }
 
-/* INIT */
+/* SHOW APP */
 
-function init(){
+function showApp(){
 
-user=localStorage.getItem("st_user")
-
-if(user){
-
-loginPage.style.display="none"
-
-app.style.display="block"
-
-username.innerText=user
-
-loadPosts()
-
-}else{
-
-loginPage.style.display="flex"
-
-app.style.display="none"
-
-}
-
-}
-
-init()
-
-/* PREVIEW FILE */
-
-fileInput.onchange=function(){
-
-let file=this.files[0]
-
-if(!file)return
-
-let url=URL.createObjectURL(file)
-
-if(file.type.startsWith("image")){
-
-preview.innerHTML=`<img src="${url}" class="postimg">`
-
-}else{
-
-preview.innerHTML=`<video src="${url}" class="postimg" controls></video>`
-
-}
-
-}
-
-/* FORMAT TIME */
-
-function now(){
-
-let d=new Date()
-
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+" "+d.toTimeString().slice(0,5)
-
-}
-
-/* LOAD POSTS */
-
-async function loadPosts(){
-
-let res=await fetch("load.php")
-
-let posts=await res.json()
-
-let feed=document.getElementById("feed")
-
-feed.innerHTML=""
-
-posts.reverse().forEach((p,i)=>{
-
-let media=""
-
-if(p.file){
-
-if(p.file.match(/jpg|png|jpeg|gif/i)){
-
-media=`<img src="${p.file}" class="postimg">`
-
-}else{
-
-media=`<video src="${p.file}" class="postimg" controls></video>`
-
-}
-
-}
-
-let comments=""
-
-if(p.comments){
-
-p.comments.forEach(c=>{
-
-comments+=`<div class="comment"><b>${c.user}</b>: ${c.text} <span style="font-size:11px;color:#777">${c.time}</span></div>`
-
-})
-
-}
-
-let div=document.createElement("div")
-
-div.className="card"
-
-div.innerHTML=`
-
-<div class="postHeader">
-
-<div class="postUser">${p.user}</div>
-
-<div class="postTime">${p.time}</div>
-
-</div>
-
-<div>${p.text}</div>
-
-${media}
-
-${comments}
-
-<div class="commentInput">
-
-<input id="c${i}" placeholder="Komentar...">
-
-<button onclick="comment(${i})">Kirim</button>
-
-</div>
-
-`
-
-feed.appendChild(div)
-
-})
+document.getElementById("loginPage").style.display="none";
+document.getElementById("app").style.display="block";
+document.getElementById("whoLogin").innerText="Login sebagai: "+user;
 
 }
 
 /* POST */
 
-async function createPost(){
+window.sendPost = async function(){
 
-let text=postText.value
-let file=fileInput.files[0]
+let text = document.getElementById("postText").value.trim();
 
-if(!text && !file)return
+if(!text){
+alert("Tulis sesuatu dulu");
+return;
+}
 
-let form=new FormData()
+await addDoc(collection(db,"posts"),{
+user:user,
+text:text,
+time:Date.now()
+});
 
-form.append("user",user)
-form.append("text",text)
-form.append("time",now())
-
-if(file)form.append("file",file)
-
-await fetch("save.php",{method:"POST",body:form})
-
-postText.value=""
-preview.innerHTML=""
-fileInput.value=""
-
-loadPosts()
+document.getElementById("postText").value="";
 
 }
 
-/* COMMENT */
+/* REALTIME */
 
-async function comment(i){
+let lastCount = 0;
 
-let text=document.getElementById("c"+i).value
+function startRealtime(){
 
-if(!text)return
+const q = query(collection(db,"posts"), orderBy("time"));
 
-await fetch("comment.php",{
+onSnapshot(q,(snapshot)=>{
 
-method:"POST",
+let posts = [];
 
-headers:{"Content-Type":"application/json"},
+snapshot.forEach(doc=>{
+posts.push(doc.data());
+});
 
-body:JSON.stringify({
+/* NOTIF */
 
-index:i,
-user:user,
-text:text,
-time:now()
+if(posts.length > lastCount){
 
-})
+let newPosts = posts.slice(lastCount);
 
-})
+newPosts.forEach(p=>{
+if(p.user !== user){
+document.getElementById("notifSound").play().catch(()=>{});
+}
+});
 
-loadPosts()
+document.getElementById("newPostAlert").style.display="block";
 
+}
+
+lastCount = posts.length;
+
+renderPosts(posts);
+
+});
+
+}
+
+/* RENDER */
+
+function renderPosts(posts){
+
+let html="";
+
+posts.reverse().forEach(p=>{
+
+let d = new Date(p.time);
+
+html+=`
+<div class="card">
+
+<div class="cardHeader">
+<span class="username">${p.user}</span>
+<span class="time">${d.toLocaleString("id-ID")}</span>
+</div>
+
+<div style="margin-top:6px">${p.text}</div>
+
+</div>
+`;
+
+});
+
+document.getElementById("posts").innerHTML=html;
+
+}
+
+/* ALERT */
+
+window.hideAlert = function(){
+document.getElementById("newPostAlert").style.display="none";
 }
 
 </script>
