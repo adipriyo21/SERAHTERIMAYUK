@@ -1,384 +1,480 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard DT</title>
+
+<title>SERAHTERIMAYUK</title>
 
 <style>
-*{box-sizing:border-box}
+
 body{
-  font-family:Arial, sans-serif;
-  margin:0;
-  background:linear-gradient(135deg,#dbeafe,#eef3fb);
+margin:0;
+font-family:Arial;
+background:url("backgroundbody.jpg") center/cover no-repeat fixed;
 }
 
-/* HEADER AUTO HIDE */
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  padding:15px;
-  background:rgba(255,255,255,0.7);
-  backdrop-filter:blur(10px);
-  transition:0.5s;
-  z-index:1000;
-}
-header.hide{
-  opacity:0;
-  pointer-events:none;
-}
-header button{
-  padding:10px 18px;
-  border:none;
-  border-radius:12px;
-  background:#e5e7eb;
-  cursor:pointer;
+/* LOGIN */
+
+#loginPage{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:url("backgroundlogin.jpg") center/cover no-repeat fixed;
 }
 
-/* PAGE */
-.page{
-  display:none;
-  padding:80px 15px;
-  max-width:1200px;
-  margin:auto;
-}
-.active{display:block}
+.loginBox{
 
-/* PREVIEW FULL */
-#preview{
-  max-width:100%;
-  width:100%;
-  padding:90px 40px;
+background:rgba(255,255,255,0.85);
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+width:260px;
+text-align:center;
+
 }
 
-/* TITLE TIMBUL + GLOW TIPIS */
-@keyframes glowPulse{
-  0%,100%{
-    text-shadow:
-      1px 1px 0 #fff,
-      2px 2px 0 #ccc,
-      3px 3px 0 #aaa,
-      0 0 4px #0ea5e9;
-  }
-  50%{
-    text-shadow:
-      1px 1px 0 #fff,
-      2px 2px 0 #ccc,
-      3px 3px 0 #aaa,
-      0 0 6px #0ea5e9;
-  }
-}
-.title{
-  text-align:center;
-  font-family:'Stencil Std', 'Stencil', sans-serif;
-  font-size:64px;
-  color:#0ea5e9;
-  animation:glowPulse 2s infinite alternate;
-  margin-bottom:30px;
+.loginBox input{
+
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
+box-sizing:border-box;
+
 }
 
-/* LIST */
-#list{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
+.loginBox button{
+
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+background:#3b82f6;
+color:white;
+border-radius:8px;
+cursor:pointer;
+
 }
 
-/* CARD */
+/* APP */
+
+#app{
+display:none;
+}
+
+.header{
+
+background:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+
+}
+
+.feed{
+max-width:600px;
+margin:auto;
+padding:10px;
+}
+
+.postbox{
+
+background:white;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+
+}
+
+.postbox textarea{
+
+width:100%;
+height:60px;
+resize:none;
+border-radius:8px;
+border:1px solid #ccc;
+padding:8px;
+box-sizing:border-box;
+
+}
+
+.postbox button{
+
+margin-top:8px;
+padding:8px 14px;
+background:#3b82f6;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+
+}
+
 .card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:28px;
-  border-radius:20px;
-  color:#fff;
-  transition:0.3s;
+
+background:white;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+
 }
 
-/* STATUS */
-.safe{background:#22c55e;}
-.warning{background:#facc15;color:#000;}
-.overdue{background:#ef4444;}
-
-/* ANIMASI */
-@keyframes blinkFast{
-  0%{opacity:1}
-  50%{opacity:0.4}
-  100%{opacity:1}
-}
-@keyframes blinkSlow{
-  0%{opacity:1}
-  50%{opacity:0.6}
-  100%{opacity:1}
-}
-.overdue{animation:blinkFast 1s infinite;}
-.warning{animation:blinkSlow 2s infinite;}
-
-/* TEXT */
-.left b{font-size:22px;}
-.ket{font-size:34px;font-weight:bold;}
-.card small{font-size:18px;}
-.timer{font-size:28px;font-weight:bold;}
-
-/* INPUT */
-input{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:10px;
-  border:1px solid #ddd;
-}
-.action{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#3b82f6;
-  color:white;
+.postHeader{
+display:flex;
+justify-content:space-between;
 }
 
-/* SUGGEST */
-#suggestBox{
-  background:white;
-  border-radius:10px;
-  max-height:150px;
-  overflow:auto;
-}
-#suggestBox div{
-  padding:8px;
-  cursor:pointer;
-}
-#suggestBox div:hover{background:#eef}
-
-/* OUTPUT */
-#listOutput{display:flex;flex-direction:column;gap:10px;}
-.item{
-  display:flex;
-  justify-content:space-between;
-  padding:14px;
-  background:white;
-  border-radius:10px;
-  border:1px solid #ddd;
-}
-.doneBtn{
-  background:#22c55e;
-  color:white;
-  border:none;
-  padding:10px 14px;
-  border-radius:8px;
-  cursor:pointer;
+.postUser{
+font-weight:bold;
 }
 
-/* RESPONSIVE HP */
-@media (max-width:768px){
-  #preview{
-    padding:80px 10px;
-  }
-  .title{
-    font-size:26px;
-  }
-  .card{
-    flex-direction:column;
-    align-items:flex-start;
-    padding:16px;
-    gap:8px;
-  }
-  .left b{
-    font-size:14px;
-  }
-  .ket{
-    font-size:20px;
-  }
-  .card small{
-    font-size:12px;
-  }
-  .timer{
-    font-size:18px;
-    align-self:flex-end;
-  }
+.postTime{
+font-size:12px;
+color:#666;
 }
+
+.postimg{
+width:100%;
+margin-top:8px;
+border-radius:8px;
+}
+
+.comment{
+font-size:13px;
+margin-top:5px;
+}
+
+.commentInput{
+display:flex;
+margin-top:6px;
+}
+
+.commentInput input{
+
+flex:1;
+padding:5px;
+border-radius:6px;
+border:1px solid #ccc;
+
+}
+
+.commentInput button{
+
+margin-left:4px;
+border:none;
+background:#3b82f6;
+color:white;
+border-radius:6px;
+padding:5px 10px;
+
+}
+
 </style>
 </head>
 
 <body>
 
-<header id="topbar">
-<button id="navInput">Input</button>
-<button id="navOutput">Output</button>
-<button id="navPreview">Preview</button>
-</header>
+<!-- LOGIN -->
 
-<!-- INPUT -->
-<div id="input" class="page active">
-<input id="voucher" placeholder="No Voucher">
-<input id="model" placeholder="Model ID">
-<div id="suggestBox"></div>
-<input id="ket" placeholder="Keterangan">
-<input type="date" id="tanggal">
-<input type="time" id="jam">
-<button id="btnSave" class="action">Simpan</button>
+<div id="loginPage">
+
+<div class="loginBox">
+
+<h3>Login</h3>
+
+<input id="loginUser" placeholder="Username">
+
+<input id="loginPass" type="password" placeholder="Password">
+
+<button onclick="login()">Masuk</button>
+
 </div>
 
-<!-- OUTPUT -->
-<div id="output" class="page">
-<input id="search" placeholder="Cari No Voucher...">
-<div id="listOutput"></div>
 </div>
 
-<!-- PREVIEW -->
-<div id="preview" class="page">
-<h1 class="title">DASHBOARD DT RUANG</h1>
-<div id="list"></div>
+<!-- APP -->
+
+<div id="app">
+
+<div class="header">
+
+<div id="username"></div>
+
+<button onclick="logout()">Keluar</button>
+
+</div>
+
+<div class="feed">
+
+<div class="postbox">
+
+<textarea id="postText" placeholder="Tulis sesuatu..."></textarea>
+
+<input type="file" id="fileInput">
+
+<div id="preview"></div>
+
+<button onclick="createPost()">Posting</button>
+
+</div>
+
+<div id="feed"></div>
+
+</div>
+
 </div>
 
 <script>
-const topbar=document.getElementById("topbar");
-let hideTimer;
-function showBar(){
-  topbar.classList.remove("hide");
-  clearTimeout(hideTimer);
-  hideTimer=setTimeout(()=>topbar.classList.add("hide"),2000);
-}
-document.addEventListener("mousemove",showBar);
-document.addEventListener("touchstart",showBar);
 
-function openFullscreen(){
-  let el=document.documentElement;
-  if(el.requestFullscreen) el.requestFullscreen();
-}
+let user=localStorage.getItem("st_user")
 
-/* DATA MASTER */
-const master={
-"md001":"Siapkan bahan A",
-"md002":"Cek kualitas",
-"md003":"Packing barang"
-};
-let data=JSON.parse(localStorage.getItem("data")||"[]");
+/* LOGIN */
 
-/* NAV */
-function show(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  if(id==="preview") openFullscreen();
-  render();
-  renderOutput();
-}
-navInput.onclick=()=>show("input");
-navOutput.onclick=()=>show("output");
-navPreview.onclick=()=>show("preview");
+async function login(){
 
-/* SUGGEST */
-model.oninput=function(){
-  let val=this.value.toLowerCase();
-  suggestBox.innerHTML="";
-  if(!val)return;
-  Object.keys(master).forEach(key=>{
-    if(key.includes(val)){
-      let d=document.createElement("div");
-      d.innerText=key.toUpperCase();
-      d.onclick=function(){
-        model.value=key.toUpperCase();
-        ket.value=master[key];
-        suggestBox.innerHTML="";
-      };
-      suggestBox.appendChild(d);
-    }
-  });
-  if(master[val]) ket.value=master[val];
-};
+let user=document.getElementById("loginUser").value
+let pass=document.getElementById("loginPass").value
 
-/* SAVE */
-btnSave.onclick=function(){
-  if(!voucher.value || !model.value || !tanggal.value || !jam.value){
-    alert("Lengkapi data!");
-    return;
-  }
-  data.push({
-    id:Date.now(),
-    voucher:voucher.value,
-    model:model.value,
-    ket:ket.value,
-    tanggal:tanggal.value,
-    jam:jam.value
-  });
-  localStorage.setItem("data",JSON.stringify(data));
-  voucher.value=""; model.value=""; ket.value=""; tanggal.value=""; jam.value=""; suggestBox.innerHTML="";
-  render(); renderOutput();
-};
+let res=await fetch("login.php",{
 
-/* TIME */
-function diff(i){return new Date(i.tanggal+"T"+i.jam)-new Date();}
-function format(ms){
-  let s=Math.abs(ms)/1000;
-  let d=Math.floor(s/86400); s%=86400;
-  let h=Math.floor(s/3600); s%=3600;
-  let m=Math.floor(s/60); let sec=Math.floor(s%60);
-  let r=[];
-  if(d>0) r.push(d+" hr");
-  if(h>0 || d>0) r.push(h+" jam");
-  if(m>0 || h>0 || d>0) r.push(m+" menit");
-  r.push(sec+" detik");
-  return (ms<0?"- ":"")+r.join(" ");
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+user:user,
+pass:pass
+})
+
+})
+
+let data=await res.json()
+
+if(data.status==="ok"){
+
+localStorage.setItem("st_user",user)
+
+location.reload()
+
+}else{
+
+alert("Username atau password salah")
+
 }
 
-/* PREVIEW */
-function render(){
-  data=JSON.parse(localStorage.getItem("data")||"[]");
-  list.innerHTML="";
-  [...data].sort((a,b)=>diff(a)-diff(b)).forEach(i=>{
-    let s=diff(i);
-    let cls=s<0?"overdue":(s<3600000?"warning":"safe"); // <1jam warning
-    let d=document.createElement("div");
-    d.className="card "+cls;
-    d.innerHTML=`
-    <div class="left">
-      <b>${i.voucher} | ${i.model}</b>
-      <div class="ket">${i.ket}</div>
-      <small>${i.tanggal} ${i.jam}</small>
-    </div>
-    <div class="timer">${format(s)}</div>
-    `;
-    list.appendChild(d);
-  });
 }
 
-/* OUTPUT */
-search.oninput=renderOutput;
-function renderOutput(){
-  data=JSON.parse(localStorage.getItem("data")||"[]");
-  let keyword=search.value.toLowerCase();
-  listOutput.innerHTML="";
-  data.filter(i=>i.voucher.toLowerCase().includes(keyword))
-  .forEach(i=>{
-    let d=document.createElement("div");
-    d.className="item";
-    d.innerHTML=`
-      <div>
-        <b>${i.voucher}</b><br>
-        ${i.model}<br>
-        ${i.ket}
-      </div>
-    `;
-    let btn=document.createElement("button");
-    btn.innerText="SUDAH SETOR"; btn.className="doneBtn";
-    btn.onclick=function(){
-      let newData=data.filter(x=>x.id!==i.id);
-      localStorage.setItem("data",JSON.stringify(newData));
-      data=newData;
-      render(); renderOutput();
-    };
-    d.appendChild(btn); listOutput.appendChild(d);
-  });
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem("st_user")
+
+location.reload()
+
 }
 
-/* AUTO UPDATE PREVIEW */
-setInterval(()=>{if(document.getElementById("preview").classList.contains("active")) render();},1000);
+/* INIT */
 
-render(); renderOutput();
+function init(){
+
+user=localStorage.getItem("st_user")
+
+if(user){
+
+loginPage.style.display="none"
+
+app.style.display="block"
+
+username.innerText=user
+
+loadPosts()
+
+}else{
+
+loginPage.style.display="flex"
+
+app.style.display="none"
+
+}
+
+}
+
+init()
+
+/* PREVIEW FILE */
+
+fileInput.onchange=function(){
+
+let file=this.files[0]
+
+if(!file)return
+
+let url=URL.createObjectURL(file)
+
+if(file.type.startsWith("image")){
+
+preview.innerHTML=`<img src="${url}" class="postimg">`
+
+}else{
+
+preview.innerHTML=`<video src="${url}" class="postimg" controls></video>`
+
+}
+
+}
+
+/* FORMAT TIME */
+
+function now(){
+
+let d=new Date()
+
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+" "+d.toTimeString().slice(0,5)
+
+}
+
+/* LOAD POSTS */
+
+async function loadPosts(){
+
+let res=await fetch("load.php")
+
+let posts=await res.json()
+
+let feed=document.getElementById("feed")
+
+feed.innerHTML=""
+
+posts.reverse().forEach((p,i)=>{
+
+let media=""
+
+if(p.file){
+
+if(p.file.match(/jpg|png|jpeg|gif/i)){
+
+media=`<img src="${p.file}" class="postimg">`
+
+}else{
+
+media=`<video src="${p.file}" class="postimg" controls></video>`
+
+}
+
+}
+
+let comments=""
+
+if(p.comments){
+
+p.comments.forEach(c=>{
+
+comments+=`<div class="comment"><b>${c.user}</b>: ${c.text} <span style="font-size:11px;color:#777">${c.time}</span></div>`
+
+})
+
+}
+
+let div=document.createElement("div")
+
+div.className="card"
+
+div.innerHTML=`
+
+<div class="postHeader">
+
+<div class="postUser">${p.user}</div>
+
+<div class="postTime">${p.time}</div>
+
+</div>
+
+<div>${p.text}</div>
+
+${media}
+
+${comments}
+
+<div class="commentInput">
+
+<input id="c${i}" placeholder="Komentar...">
+
+<button onclick="comment(${i})">Kirim</button>
+
+</div>
+
+`
+
+feed.appendChild(div)
+
+})
+
+}
+
+/* POST */
+
+async function createPost(){
+
+let text=postText.value
+let file=fileInput.files[0]
+
+if(!text && !file)return
+
+let form=new FormData()
+
+form.append("user",user)
+form.append("text",text)
+form.append("time",now())
+
+if(file)form.append("file",file)
+
+await fetch("save.php",{method:"POST",body:form})
+
+postText.value=""
+preview.innerHTML=""
+fileInput.value=""
+
+loadPosts()
+
+}
+
+/* COMMENT */
+
+async function comment(i){
+
+let text=document.getElementById("c"+i).value
+
+if(!text)return
+
+await fetch("comment.php",{
+
+method:"POST",
+
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({
+
+index:i,
+user:user,
+text:text,
+time:now()
+
+})
+
+})
+
+loadPosts()
+
+}
+
 </script>
+
 </body>
 </html>
